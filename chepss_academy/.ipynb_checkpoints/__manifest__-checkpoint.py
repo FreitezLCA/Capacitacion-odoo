@@ -16,7 +16,8 @@
     'depends': ['base'],
     'license': 'LGPL-3',
     'data':[
-        
+        'security/academy_security.xml',
+        'security/ir.model.access.csv',
     ],
     'demo':[
         
