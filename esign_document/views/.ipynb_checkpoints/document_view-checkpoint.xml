@@ -6,15 +6,34 @@
             <field name="model">esign.document</field>
             <field name="arch" type="xml">
                 <form string="Esign Form">
+                    <header>
+                        <button name="button_draft" class="oe_highlight" states="draft" string="Enviar a revisión" type="object"
+                            help="Enviar documento a revisión"/>
+                        <button name="button_cancell" class="oe_highlight" states="draft,review,sign" string="Cancelar" type="object"
+                            help="Cancelar proceso de firma de documento"/>
+                        <field
+                                name="state"
+                                widget="statusbar"
+                                nolabel="1"
+                                options="{'clickable': '0'}"
+                                statusbar_visible="draft,review,sign,signed"/>
+                    </header>
                     <sheet>                        
                         <h3>
                             <group> 
                                 <field name="name" attrs="{'invisible': 1}"/>
+                                <field name="active" attrs="{'invisible': 1}"/>
                                 <field name="type"/>
                             </group>
                         </h3>   
                         <group>
                             <field name="description"/>
+                            <field name="file" filename="file_name" attrs="{'invisible': [
+                                                                           ('state', '=', 'draft'),
+                                                                           ('state', '=', 'review'),
+                                                                           ('state', '=', 'sign'),
+                                                                           ('state', '=', 'signed')]}"/>
+                            <field name="file_name" attrs="{'invisible': 1}" domain=""/>
                         </group>
                         <notebook>
                             <page string="Firmante">
@@ -36,7 +55,7 @@
                             </page>
                             <page string="Documento">
                                 <group>
-                                    <field name="document"/>
+                                    <!-- <field name="file" filename="file_name" widget="pdf_viewer"/>-->
                                 </group>
                             </page>
                         </notebook>
