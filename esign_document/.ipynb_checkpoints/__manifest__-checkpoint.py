@@ -15,7 +15,10 @@
     'depends': ['hr'],
     'license': 'LGPL-3',
     'data':[
-        
+        'security/esign_security.xml',
+        'security/ir.model.access.csv',
+        'views/esign_menuitems.xml',
+        'views/document_view.xml',       
     ],
     'demo':[
         

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.actions.act_window" id="esign_document_list_action">
+            <field name="name">Firmas</field>
+            <field name="res_model">esign.document</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create the first esign
+                </p>
+            </field>
+        </record>
+        <menuitem name="Esign"
+                  id="menu_esign"
+                  sequence="1"/>
+        <menuitem id="menu_esign_sub"
+                  name="Esigns"
+                  parent="menu_esign"
+                  sequence="2"/>
+        <menuitem id="menu_esign_process"
+                  name="Firmas"
+                  parent="menu_esign_sub"
+                  sequence="3"
+                  action="esign_document_list_action"/>
+    </data>
+</odoo>

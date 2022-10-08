@@ -1,0 +1,5 @@
+id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
+esign_admin,esign admin,model_esign_document,group_esign_admin,1,1,1,1
+esign_initiator,esign initiator,model_esign_document,group_esign_initiator,1,0,1,0
+esign_approver,esign approver,model_esign_document,group_esign_approver,1,1,0,0
+esign_read_all,esign read all,model_esign_document,,1,0,0,0

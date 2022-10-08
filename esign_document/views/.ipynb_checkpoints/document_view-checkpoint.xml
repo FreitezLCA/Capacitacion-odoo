@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="esign_document_view_form">
+            <field name="name">esign.document.form</field>
+            <field name="model">esign.document</field>
+            <field name="arch" type="xml">
+                <form string="Esign Form">
+                    <sheet>                        
+                        <h3>
+                            <group> 
+                                <field name="name" attrs="{'invisible': 1}"/>
+                                <field name="type"/>
+                            </group>
+                        </h3>   
+                        <group>
+                            <field name="description"/>
+                        </group>
+                        <notebook>
+                            <page string="Firmante">
+                                <group>
+                                    <field name="signatory_id"/>
+                                </group>
+                            </page>
+                            <page string="Aprobadores">
+                                <field name="approver_ids">
+                                    <tree>
+                                        <field name="name"/>
+                                    </tree>
+                                    <form>
+                                        <group>
+                                            <field name="name"/>
+                                        </group>
+                                    </form>
+                                </field>
+                            </page>
+                            <page string="Documento">
+                                <group>
+                                    <field name="document"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="esign_document_view_list">
+            <field name="name">esign.document.list</field>
+            <field name="model">esign.document</field>
+            <field name="arch" type="xml">
+                <tree string="Esign List">
+                    <field name="name"/>
+                    <field name="description"/>
+                </tree>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="esign_document_view_search">
+            <field name="name">esign.document.search</field>
+            <field name="model">esign.document</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="description"/>
+                </search>
+            </field>
+        </record>
+    </data>
+</odoo>
