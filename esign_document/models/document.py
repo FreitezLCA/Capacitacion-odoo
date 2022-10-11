@@ -12,6 +12,8 @@ class DocumentModel(models.Model):
     
     file = fields.Binary(string='Documento')
     file_name = fields.Char(string='Nombre archivo')
+    file_view = fields.Binary(string='Documento vista')
+    file_upload = fields.Boolean(string="Documento cargado", default=False)
     
     active = fields.Boolean(string="Activo", default=True)
     
@@ -29,7 +31,7 @@ class DocumentModel(models.Model):
                                         ('signed', 'Firmado')], 
                              copy=False)
     
-    signatory_id = fields.Many2one('hr.employee', string='Firmante', required=True)
+    employee_id = fields.Many2one('res.users', string='Firmante')
     #signatory_id = fields.Many2one('res.users', string="Firmante", required=True)
     #approver_ids = fields.Many2many('hr.employee', string="Aprobadores", required=True)
     approver_ids = fields.Many2many('res.users',
@@ -37,11 +39,16 @@ class DocumentModel(models.Model):
                                     string="Aprobadores")
     
     
-    @api.onchange('type','signatory_id')
+    @api.onchange('type','employee_id','file')
     def _onchange_name(self):
         for rec in self:          
-            if rec.signatory_id.name and rec.type != '':
-                rec.name = rec.signatory_id.name +' / ' + rec.type
+            if rec.employee_id.name and rec.type != '':
+                rec.name = rec.employee_id.name +' / ' + rec.type
+                
+            if rec.file:
+                rec.file_upload = True
+                rec.file_view = rec.file
+            
                 
     @api.model
     def create(self, vals):
