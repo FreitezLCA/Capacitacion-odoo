@@ -7,10 +7,49 @@
             <field name="arch" type="xml">
                 <form string="Esign Form" create="false">
                     <header>
-                        <button name="button_draft" class="oe_highlight" states="draft" string="Enviar a revisión" type="object"
-                            help="Enviar documento a revisión"/>
-                        <button name="button_cancell" class="oe_highlight" states="draft,review,sign" string="Cancelar" type="object"
-                            help="Cancelar proceso de firma de documento"/>
+                        <button name="button_draft" 
+                                class="oe_highlight" 
+                                states="draft" 
+                                string="Enviar a revisión" 
+                                type="object"
+                                groups="esign_document.group_esign_initiator"
+                                help="Enviar documento a revisión"/>
+                        <button name="button_cancell_draft" 
+                                class="oe_highlight" 
+                                states="draft" 
+                                string="Cancelar" 
+                                type="object"
+                                groups="esign_document.group_esign_initiator"
+                                help="Cancelar proceso de firma de documento"/>
+                        
+                        <button name="button_approver" 
+                                class="oe_highlight" 
+                                states="review" 
+                                string="Aprobar y firmar" 
+                                type="object"
+                                groups="esign_document.group_esign_approver"
+                                help="Aprobar y firmar documento"/>
+                        <button name="button_cancell_review" 
+                                class="oe_highlight" 
+                                states="review" 
+                                string="Cancelar" 
+                                type="object"
+                                groups="esign_document.group_esign_approver"
+                                help="Cancelar proceso de firma de documento"/>
+                        
+                        <button name="button_sign" 
+                                class="oe_highlight" 
+                                states="sign" 
+                                string="Firmar" 
+                                type="object"
+                                help="Firmar documento"/>
+                        <button name="button_cancell_sign" 
+                                class="oe_highlight" 
+                                states="sign" 
+                                string="Cancelar" 
+                                type="object"
+                                help="Cancelar proceso de firma de documento"/>
+                        
                         <field
                                 name="state"
                                 widget="statusbar"
@@ -18,10 +57,15 @@
                                 options="{'clickable': False}"
                                 statusbar_visible="draft,review,sign,signed"/>
                     </header>
-                    <sheet>                        
+                    <sheet>   
+                        <h1>
+                            <group>
+                                <field name="name" attrs="{'invisible': [('name', '=', False)],
+                                                          'readonly': [('state', 'in', ('draft','review','sign','signed'))]}"/>
+                            </group>                                
+                        </h1>
                         <h3>
-                            <group> 
-                                <field name="name" attrs="{'invisible': 1}"/>
+                            <group>                                
                                 <field name="active" attrs="{'invisible': 1}"/>
                                 <field name="type" attrs="{'readonly': [('state', 'in', ('review','sign','signed'))]}"/>
                             </group>

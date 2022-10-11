@@ -2,24 +2,24 @@
 <odoo>
     <record id="seq_esign_contract" model="ir.sequence">
         <field name="name">Esign / Contrato</field>
-        <field name="code">esign.document</field>
-        <field name="prefix">CON/%(year)s</field>
+        <field name="code">esign.document.contract</field>
+        <field name="prefix">CON/%(year)s/</field>
         <field name="padding">5</field>
         <field name="company_id" eval="False"/>
     </record>
     
     <record id="seq_esign_annex" model="ir.sequence">
         <field name="name">Esign / Anexo</field>
-        <field name="code">esign.document</field>
-        <field name="prefix">ANE/%(year)s</field>
+        <field name="code">esign.document.annex</field>
+        <field name="prefix">ANE/%(year)s/</field>
         <field name="padding">5</field>
         <field name="company_id" eval="False"/>
     </record>
     
     <record id="seq_esign_persnal" model="ir.sequence">
         <field name="name">Esign / Ficha personal</field>
-        <field name="code">esign.document</field>
-        <field name="prefix">FPE/%(year)s</field>
+        <field name="code">esign.document.personal</field>
+        <field name="prefix">FPE/%(year)s/</field>
         <field name="padding">5</field>
         <field name="company_id" eval="False"/>
     </record>
