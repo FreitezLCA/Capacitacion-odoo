@@ -26,7 +26,7 @@ class DocumentModel(models.Model):
     
     state = fields.Selection(string='Estado', 
                              selection=[('draft', 'Borrador'),
-                                        ('review', 'Revisión'),
+                                        ('visa', 'Visado'),
                                         ('sign', 'Firma'),
                                         ('signed', 'Firmado')], 
                              copy=False)
@@ -38,6 +38,8 @@ class DocumentModel(models.Model):
                                     domain="[('groups_id.name', '=', 'Esign / Approver')]",
                                     string="Aprobadores")
     
+    creator_id = fields.Many2one('res.users', string="Creador")
+    is_creator = fields.Boolean(string='Es el creador', compute='_check_is_creator') 
     
     @api.onchange('type','employee_id','file')
     def _onchange_name(self):
@@ -55,7 +57,7 @@ class DocumentModel(models.Model):
         ## Definition
         ## TODO:
         ### validar que approver exista
-        if not vals['approver_ids']:
+        if vals['approver_ids'] == []:
             raise ValidationError('Debe seleccionar como minimo un aprobador del documento')
         if vals['employee_id'] == False:
             raise ValidationError('Debe seleccionar el empleado asociado al documento')
@@ -73,17 +75,31 @@ class DocumentModel(models.Model):
             ref = self.env['ir.sequence'].next_by_code('esign.document.personal')
             vals['name'] = ref
             
-        
+        #vals['creatores_id'] = self.env['res.users'].user
+        vals['creator_id'] = self.env.user.id
         vals['state'] = 'draft'
-        print('override successfully')
         return super(DocumentModel, self).create(vals)
+    
+    
+    #@api.depends()
+    #def _get_current_user(self):
+        #for rec in self:
+            #rec.creator_id = self.env.user
+            
+    @api.depends()
+    def _check_is_creator(self):
+        for rec in self:
+            if rec.creator_id.id == self.env.user.id:
+                rec.is_creator = True
+            else:
+                rec.is_creator = False
                 
     def button_draft(self):
         self.write({
-            'state': "review"
+            'state': "visa"
         })
         
-    def button_review(self):
+    def button_visa(self):
         self.write({
             'state': "sign"
         })
@@ -93,14 +109,14 @@ class DocumentModel(models.Model):
             'state': "draft"
         })
     
-    def button_cancell_review(self):
+    def button_cancell_visa(self):
         self.write({
             'state': "draft"
         })
         
     def button_cancell_sign(self):
         self.write({
-            'state': "draft"
+            'state': "visa"
         })
         
     def button_approver(self):

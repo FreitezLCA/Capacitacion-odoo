@@ -10,7 +10,7 @@
                         <button name="button_draft" 
                                 class="oe_highlight" 
                                 states="draft" 
-                                string="Enviar a revisión" 
+                                string="Enviar a visar"                                
                                 type="object"
                                 groups="esign_document.group_esign_initiator"
                                 help="Enviar documento a revisión"/>
@@ -23,15 +23,15 @@
                                 help="Cancelar proceso de firma de documento"/>
                         
                         <button name="button_approver" 
-                                class="oe_highlight" 
-                                states="review" 
-                                string="Aprobar y firmar" 
+                                class="oe_highlight"
+                                states="visa"
+                                string="Visar" 
                                 type="object"
                                 groups="esign_document.group_esign_approver"
-                                help="Aprobar y firmar documento"/>
-                        <button name="button_cancell_review" 
+                                help="Visar documento"/>
+                        <button name="button_cancell_visa" 
                                 class="oe_highlight" 
-                                states="review" 
+                                states="visa" 
                                 string="Cancelar" 
                                 type="object"
                                 groups="esign_document.group_esign_approver"
@@ -55,28 +55,30 @@
                                 widget="statusbar"
                                 nolabel="1"
                                 options="{'clickable': False}"
-                                statusbar_visible="draft,review,sign,signed"/>
+                                statusbar_visible="draft,visa,sign,signed"/>
                     </header>
                     <sheet>   
                         <h1>
                             <group>
                                 <field name="name" attrs="{'invisible': [('name', '=', False)],
-                                                          'readonly': [('state', 'in', ('draft','review','sign','signed'))]}"/>
-                            </group>                                
+                                                          'readonly': [('state', 'in', ('draft','visa','sign','signed'))]}"/>
+                            </group>                               
                         </h1>
                         <h3>
                             <group>                                
                                 <field name="active" attrs="{'invisible': 1}"/>
-                                <field name="type" attrs="{'readonly': [('state', 'in', ('review','sign','signed'))]}"/>
+                                <field name="creator_id" attrs="{'invisible': 1}"/>                                
+                                <field name="is_creator" attrs="{'invisible': 1}"/>
+                                <field name="type" attrs="{'readonly':[('is_creator', '!=', True)]}"/>
                             </group>
                         </h3>   
                         <group>
                             <field name="description" attrs="{'readonly': [
-                                                                           ('state', 'in', ('review','sign','signed'))]}"/>
+                                                                           ('state', 'in', ('visa','sign','signed'))]}"/>
                             <field name="file" filename="file_name" attrs="{'invisible': [
-                                                                               ('state', 'in', ('review','sign','signed'))],
+                                                                               ('state', 'in', ('visa','sign','signed'))],
                                                                            'readonly': [
-                                                                               ('state', 'in', ('review','sign','signed'))]}"/>
+                                                                               ('state', 'in', ('visa','sign','signed'))]}"/>
                             <field name="file_name" attrs="{'invisible': 1}"/>
                         </group>
                         <notebook>
@@ -85,19 +87,19 @@
                                     <!-- <field name="file" filename="file_name" widget="pdf_viewer"/>-->
                                     <field name="file_view" 
                                            attrs="{'invisible': [('state', '=', False)],
-                                                  'readonly': [('state', 'in', ('review','sign','signed'))]}"
+                                                  'readonly': [('state', 'in', ('visa','sign','signed'))]}"
                                            widget="pdf_viewer"/>
                                 </group>
                             </page>
                             <page string="Firmante">
                                 <group>
                                     <field name="employee_id" attrs="{'readonly': [
-                                                                           ('state', 'in', ('review','sign','signed'))]}"/>
+                                                                           ('state', 'in', ('visa','sign','signed'))]}"/>
                                 </group>
                             </page>
                             <page string="Aprobadores">
                                 <field name="approver_ids" attrs="{'readonly': [
-                                                                           ('state', 'in', ('review','sign','signed'))]}">
+                                                                           ('state', 'in', ('visa','sign','signed'))]}">
                                     <tree>
                                         <field name="name"/>
                                     </tree>
