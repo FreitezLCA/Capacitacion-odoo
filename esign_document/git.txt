@@ -1,4 +1,4 @@
 git config --global user.email "cesar.freitez@chepss.cl" && git config --global user.name "Cesar Freitez"
 
-password: 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
+password: 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
 user: freitezlca
